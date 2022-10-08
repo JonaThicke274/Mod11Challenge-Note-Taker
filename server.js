@@ -15,6 +15,16 @@ app.use(express.json());
 // Implicitly tells server to provide, file path: public folder, in application
 app.use(express.static("public"));
 
+// HTML Routes
+app.get("/", (req, res) =>{
+    res.sendFile(path.join(__dirname, "./public/index.html"))
+});
+
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/notes.html"))
+});
+
+// API Routes
 app.get("/api/notes", (req, res) => {
     // Reads db.json and returns saved notes in JSON format
     res.sendFile(path.join(__dirname, "/db/db.json"));
