@@ -56,10 +56,22 @@ app.post("/api/notes", (req, res) => {
 });
 
 app.delete("/api/notes", (req, res) => {
-    // console.log("DELETE test works")
+    // Assign path for json file reading/writing
+    let jsonFilePath = path.join(__dirname, "./db/db.json");
+    // Reads and parses db.json into an array to delete a note from
+    let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    // Grabs id of note to be deleted
+    let noteId = req.params.id;
 
-    // Creating base for using DELETE functionality, will return to later to actually create
-    res.json();
+    savedNotes = savedNotes.filter(currentNote => {
+        return currentNote.id != noteId;
+    })
+
+    // Updates db.json
+    fs.writeFileSync(jsonFilePath, JSON.stringify(savedNotes));
+
+    // Displays updated notes to user
+    res.json(savedNotes)
 })
 
 app.listen(PORT, () => {
