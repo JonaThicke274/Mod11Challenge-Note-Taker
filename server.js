@@ -33,6 +33,13 @@ app.post("/api/notes", (req, res) => {
     res.json(createdNote);
 });
 
+app.delete("/api/notes", (req, res) => {
+    // console.log("DELETE test works")
+
+    // Creating base for using DELETE functionality, will return to later to actually create
+    res.json();
+})
+
 app.listen(PORT, () => {
     console.log(`Note Taker API server now on port ${PORT}!`)
 });
