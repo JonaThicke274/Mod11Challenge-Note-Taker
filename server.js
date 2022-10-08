@@ -21,34 +21,38 @@ app.use(express.static("public"));
 
 app.get("/api/notes", (req, res) => {
     // console.log("GET test works")
-    console.log(allNotes.length)
+
     res.json(allNotes);
 });
 
 app.post("/api/notes", (req, res) => {
-    // console.log("POST test works");
-
+    // Assign path for json file reading/writing
     let jsonFilePath = path.join(__dirname, "./db/db.json");
+    // Reads and parses db.json into an array to push new notes to
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
-    // const { title, text } = req.body;
-    const title = "test title"
-    const text = "test text"
+    // Deconstructs body of note to be saved
+    const { title, text } = req.body;
 
+    // Validates new note has a title and text
     if (title && text) {
+        // Creates a note object to push to savedNotes
         const createdNote = {
             title,
             text,
             id: uuid(),
         };
-        
+
         savedNotes.push(createdNote);
         
+        // Updates db.json
         fs.writeFileSync(jsonFilePath, JSON.stringify(savedNotes));
-        console.log(`Note: ${createdNote.title} saved to db.json!`)
+        console.log(`Note: "${createdNote.title}" saved to db.json!`)
         
+        // Displays created note to user
         res.json(createdNote);
     }
     else {
+        // Error message indicating to user that the note was not created
         res.json("Error: Note not created.")
     }
 
