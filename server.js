@@ -1,4 +1,5 @@
 // Declarations of needed functionalities
+const { application } = require("express");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -14,3 +15,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Implicitly tells server to provide, file path: public folder, in application
 app.use(express.static("public"));
+
+app.get("/api/notes", (req, res) => {
+    // console.log("GET test works")
+
+    res.json(allNotes);
+});
+
+app.listen(PORT, () => {
+    console.log(`Note Taker API server now on port ${PORT}!`)
+});
