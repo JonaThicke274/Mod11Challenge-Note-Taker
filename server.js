@@ -7,10 +7,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const uuid = require('./helpers/uuid');
 
-// Declaration of json file to GET, POST, & DELETE from.
-const allNotes = require("./db/db.json");
-const e = require("express");
-const { create } = require("domain");
 
 // Parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
@@ -20,9 +16,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/api/notes", (req, res) => {
-    // console.log("GET test works")
-
-    res.json(allNotes);
+    // Reads db.json and returns saved notes in JSON format
+    res.sendFile(path.join(__dirname, "/db/db.json"));
 });
 
 app.post("/api/notes", (req, res) => {
@@ -31,7 +26,9 @@ app.post("/api/notes", (req, res) => {
     // Reads and parses db.json into an array to push new notes to
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     // Deconstructs body of note to be saved
-    const { title, text } = req.body;
+    // const { title, text } = req.body;
+    title = "test title";
+    text = "test text";
 
     // Validates new note has a title and text
     if (title && text) {
