@@ -15,15 +15,6 @@ app.use(express.json());
 // Implicitly tells server to provide, file path: public folder, in application
 app.use(express.static("public"));
 
-// HTML Routes
-app.get("/", (req, res) =>{
-    res.sendFile(path.join(__dirname, "./public/index.html"))
-});
-
-app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "./public/notes.html"))
-});
-
 // API Routes
 app.get("/api/notes", (req, res) => {
     // Reads db.json and returns saved notes in JSON format
@@ -71,7 +62,8 @@ app.delete("/api/notes", (req, res) => {
     // Reads and parses db.json into an array to delete a note from
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     // Grabs id of note to be deleted
-    let noteId = req.params.id;
+    // let noteId = req.params.id;
+    let noteId = "0954";
 
     savedNotes = savedNotes.filter(currentNote => {
         return currentNote.id != noteId;
@@ -83,6 +75,19 @@ app.delete("/api/notes", (req, res) => {
     // Displays updated notes to user
     res.json(savedNotes)
 })
+
+// HTML Routes
+app.get("/", (req, res) =>{
+    res.sendFile(path.join(__dirname, "./public/index.html"));
+});
+
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/notes.html"));
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
+});
 
 app.listen(PORT, () => {
     console.log(`Note Taker API server now on port ${PORT}!`)
