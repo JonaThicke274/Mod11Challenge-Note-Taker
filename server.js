@@ -22,6 +22,17 @@ app.get("/api/notes", (req, res) => {
     res.json(allNotes);
 });
 
+app.post("/api/notes", (req, res) => {
+    // console.log("POST test works");
+    
+    createdNote = {
+        "title":"Test Title",
+        "text":"Test text"
+    };
+
+    res.json(createdNote);
+});
+
 app.listen(PORT, () => {
     console.log(`Note Taker API server now on port ${PORT}!`)
 });
