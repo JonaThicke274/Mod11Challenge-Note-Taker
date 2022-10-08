@@ -27,9 +27,7 @@ app.post("/api/notes", (req, res) => {
     // Reads and parses db.json into an array to push new notes to
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     // Deconstructs body of note to be saved
-    // const { title, text } = req.body;
-    title = "test title";
-    text = "test text";
+    const { title, text } = req.body;
 
     // Validates new note has a title and text
     if (title && text) {
@@ -56,14 +54,13 @@ app.post("/api/notes", (req, res) => {
 
 });
 
-app.delete("/api/notes", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
     // Assign path for json file reading/writing
     let jsonFilePath = path.join(__dirname, "./db/db.json");
     // Reads and parses db.json into an array to delete a note from
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     // Grabs id of note to be deleted
-    // let noteId = req.params.id;
-    let noteId = "0954";
+    let noteId = req.params.id;
 
     savedNotes = savedNotes.filter(currentNote => {
         return currentNote.id != noteId;
