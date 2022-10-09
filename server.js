@@ -87,5 +87,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Note Taker API server now on port ${PORT}!`)
+    console.log(`Note Taker API server now listening on port ${PORT}!`)
 });
