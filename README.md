@@ -5,7 +5,7 @@ Generates a webpage that will display a user's team and their basic/relevant inf
 
 ## Built With:
 * Javascript
-* Node.js (inquirer)
+* Node.js
 * Express.js
 * ES6
 
